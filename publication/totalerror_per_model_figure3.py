@@ -13,9 +13,11 @@ import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
 
 font = {'family':'sans','weight':'normal',
-        'size'   : 16}
+        'size'   : 22}
 
 plt.rc('font', **font)
+
+plt.rcParams["font.family"] = "Times New Roman"
 xls = pd.ExcelFile('results_RMSEtotal-true.xlsx')
 
 comp = pd.read_excel('computationaltime_1patient_10startingpoints.xlsx').set_index('model')
@@ -101,9 +103,9 @@ df_same = df3.loc[df3['dataset'] == 'same session']
 df_other = df3.loc[df3['dataset'] == 'other session']
 df_training = df3.loc[df3['dataset'] == 'training set']
 
-axes[1,0].errorbar(df_training['model'], df_training['mean'], yerr = df_training['std'], ls = '', marker = 'o', capsize = 2.0, color='darkorange')
-axes[1,1].errorbar(df_same['model'], df_same['mean'], yerr = df_same['std'], ls = '', marker = 'o', capsize = 2.0, color='darkorange')
-axes[1,2].errorbar(df_other['model'], df_other['mean'], yerr = df_other['std'], ls = '', marker = 'o', capsize = 2.0, color='darkorange')
+axes[1,0].errorbar(df_training['model'], df_training['mean'], yerr = df_training['std'], ls = '', marker = 'o', capsize = 2.0, color='black')
+axes[1,1].errorbar(df_same['model'], df_same['mean'], yerr = df_same['std'], ls = '', marker = 'o', capsize = 2.0, color='black')
+axes[1,2].errorbar(df_other['model'], df_other['mean'], yerr = df_other['std'], ls = '', marker = 'o', capsize = 2.0, color='black')
 
 
 for x,y in zip(df_same['mean'], df_same['std']):
@@ -127,7 +129,7 @@ axes[0,0].set_ylabel('Total RMSE')
 axes[1,0].set_ylabel('Total RMSE')
 
 blue_circle = mlines.Line2D([0], [0], marker='o', color='w', label='6:5 split',
-                          markerfacecolor='darkorange', markersize=10)
+                          markerfacecolor='black', markersize=10)
 axes[1,2].legend(handles=[blue_circle])
 
 black_square = mlines.Line2D([0], [0], marker='s', color='w', label='7:4 split',

@@ -5,7 +5,15 @@ plot oberg fitted parameters versus literature
 @author: P70073624
 """
 import pandas as pd
+import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.transforms as transforms
+
+font = {'size'   : 18}
+
+matplotlib.rc('font', **font)
+plt.rcParams["font.family"] = "Times New Roman"
+
 df = pd.read_excel('MTAC_values_lit_sim.xlsx')
 
 solutes = ['Urea', 'Creatinine', 'Phosphate', 'Potassium']
@@ -26,7 +34,10 @@ y_dV_sd = df['SD-devries'].iloc[0::2]
 
 fig = plt.figure(figsize = (6,6))
 
-plt.errorbar(solutes, y_SPA_peritonitis_no_avg, y_SPA_peritonitis_no_sd, c = '#007a60', capsize = 2.0, marker = 'd', ls = '', label = 'van Gelder et al.')
+offset = lambda p: transforms.ScaledTranslation(p/72.,0, plt.gcf().dpi_scale_trans)
+trans = plt.gca().transData
+
+plt.errorbar(solutes, y_SPA_peritonitis_no_avg, y_SPA_peritonitis_no_sd, c = '#007a60', capsize = 2.0, marker = 'd', ls = '', label = 'van Gelder et al.',  transform=trans+offset(-5))
 
 # plt.errorbar(solutes, y_SPA_peritonitis_y_avg, y_SPA_peritonitis_y_sd, c = '#f9627d', capsize = 2.0, marker = '^', ls = '', label = 'VG_yes')
 
@@ -36,7 +47,7 @@ plt.errorbar(solutes, y_dV_median, [ymin, ymax], c = '#9c9c9c', capsize = 2.0, m
 
 plt.errorbar(solutes, y_dV_median, y_dV_sd, c = '#c73905', capsize = 2.0, marker = 'o', ls = '', label = 'de Vries et al.')
 
-plt.errorbar(solutes, y_Oberg_avg, y_Oberg_sd, c = 'orange', capsize = 2.0, marker = 's', ls = '', label = 'TPM')
+plt.errorbar(solutes, y_Oberg_avg, y_Oberg_sd, c = 'orange', capsize = 2.0, marker = 's', ls = '', label = 'TPM',  transform=trans+offset(5))
 
 plt.ylabel('MTAC, ml/min')
 plt.legend()

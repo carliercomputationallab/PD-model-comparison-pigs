@@ -121,7 +121,7 @@ def multiprocessing_func(pfile):
     
 # for a 7:4 training to test split
 patientlist= random.sample(os.listdir('patient_files/pig2/session1'),7) #randomly generated using random.sample
-
+patientlist= os.listdir('patient_files/pig2/session1')
 
 if __name__ == '__main__':
     
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     df_OV = pd.DataFrame([arr for arr in OV], columns=cols)  
     df_OV['objective function'] = OF
     df_OV.loc['mean'] = df_OV[df_OV['objective function']<1e5].mean()
-    df_OV.to_csv('./spiderdata/7_4ratio/model1_iteration3.csv')
+    # df_OV.to_csv('./spiderdata/7_4ratio/model1_iteration3.csv')
        
     #%%
     x_avg = np.array(df_OV.loc['mean'])

@@ -28,7 +28,7 @@ print(patientlist)
 solutes = ["Urea", "Creatinine", "Sodium", "Phosphate", "Glucose", "Potassium"]
 # patientlist= ['P9.csv', 'P15.csv', 'P11.csv', 'P21.csv', 'P10.csv', 'P23.csv', 'P8.csv']
 patient_no = []
-MTAC_G = pd.Series(dtype=float) 
+MTAC_W = pd.Series(dtype=float) 
 for pfile in patientlist:  
           
     t = 240 #min

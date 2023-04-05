@@ -41,3 +41,4 @@ model789-predicted-solute-concentration-figure5 - for the best fitted mdoels, th
 fitted_X.xlsx -> fitted x values from model 7 to be used to fit alpha and LpS later.
 fitted_LpS -> all the LpS values by fitting volume 
 results_RMSEtotal-true -> all residuals saved from model 1- 9
+computational_time -> computational time required to run P10 only for 10 iterations on the server

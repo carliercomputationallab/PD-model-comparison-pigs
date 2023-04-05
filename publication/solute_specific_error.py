@@ -17,6 +17,10 @@ font = {'family':'sans','weight':'normal',
         'size'   : 16}
 
 plt.rc('font', **font)
+font = {'size'   : 18}
+
+
+plt.rcParams["font.family"] = "Times New Roman"
 
 sse_model1 = pd.read_csv('sse_m1.csv', index_col = 0)
 sse_model2 = pd.read_csv('sse_m2.csv', index_col = 0)
@@ -60,7 +64,7 @@ glu = pd.concat([df.loc['Glucose'] for df in df_list], axis = 1, keys = keys).T.
 pot = pd.concat([df.loc['Potassium'] for df in df_list], axis = 1, keys = keys).T.reset_index()
 
 solutes = ["Urea", "Creatinine", "Sodium", "Phosphate", "Glucose", "Potassium"]
-fig, axes = plt.subplots(nrows=2,ncols=3,figsize=(18,12))
+fig, axes = plt.subplots(nrows=3,ncols=2,figsize=(12,36))
 colors = sns.color_palette(palette = 'colorblind', n_colors = 9, as_cmap=True)
 # using dictionary comprehension
 # to convert lists to dictionary
@@ -75,31 +79,32 @@ for i,ax in enumerate(axes.flat):
 
 axes[0,0].errorbar(x = urea['index'], y = urea['Test set-same session'], yerr = urea['SD1'], ls = '',color = 'k', marker = 's', capsize = 2.0)
 axes[0,1].errorbar(x = crea['index'], y = crea['Test set-same session'], yerr = crea['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
-axes[0,2].errorbar(x = sodium['index'], y = sodium['Test set-same session'], yerr = sodium['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
-axes[1,0].errorbar(x = phos['index'], y = phos['Test set-same session'], yerr = phos['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
-axes[1,1].errorbar(x = glu['index'], y = glu['Test set-same session'], yerr = glu['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
-axes[1,2].errorbar(x = pot['index'], y = pot['Test set-same session'], yerr = pot['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
+axes[1,0].errorbar(x = sodium['index'], y = sodium['Test set-same session'], yerr = sodium['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
+axes[1,1].errorbar(x = phos['index'], y = phos['Test set-same session'], yerr = phos['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
+axes[2,0].errorbar(x = glu['index'], y = glu['Test set-same session'], yerr = glu['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
+axes[2,1].errorbar(x = pot['index'], y = pot['Test set-same session'], yerr = pot['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
 
 #test-set same session
 
 axes[0,0].errorbar(x = urea['index'], y = urea['Test set-other session'], yerr = urea['SD2'], ls = '',color = 'crimson',marker = 'o', capsize = 2.0)
 axes[0,1].errorbar(x = crea['index'], y = crea['Test set-other session'], yerr = crea['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
-axes[0,2].errorbar(x = sodium['index'], y = sodium['Test set-other session'], yerr = sodium['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
-axes[1,0].errorbar(x = phos['index'], y = phos['Test set-other session'], yerr = phos['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
-axes[1,1].errorbar(x = glu['index'], y = glu['Test set-other session'], yerr = glu['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
-axes[1,2].errorbar(x = pot['index'], y = pot['Test set-other session'], yerr = pot['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
+axes[1,0].errorbar(x = sodium['index'], y = sodium['Test set-other session'], yerr = sodium['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
+axes[1,1].errorbar(x = phos['index'], y = phos['Test set-other session'], yerr = phos['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
+axes[2,0].errorbar(x = glu['index'], y = glu['Test set-other session'], yerr = glu['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
+axes[2,1].errorbar(x = pot['index'], y = pot['Test set-other session'], yerr = pot['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
 
 #test-set same session
 
 axes[0,0].errorbar(x = urea['index'], y = urea['Training set'], yerr = urea['SD3'], ls = '',color = 'limegreen',marker = '*', capsize = 2.0)
 axes[0,1].errorbar(x = crea['index'], y = crea['Training set'], yerr = crea['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
-axes[0,2].errorbar(x = sodium['index'], y = sodium['Training set'], yerr = sodium['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
-axes[1,0].errorbar(x = phos['index'], y = phos['Training set'], yerr = phos['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
-axes[1,1].errorbar(x = glu['index'], y = glu['Training set'], yerr = glu['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
-axes[1,2].errorbar(x = pot['index'], y = pot['Training set'], yerr = pot['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
+axes[1,0].errorbar(x = sodium['index'], y = sodium['Training set'], yerr = sodium['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
+axes[1,1].errorbar(x = phos['index'], y = phos['Training set'], yerr = phos['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
+axes[2,0].errorbar(x = glu['index'], y = glu['Training set'], yerr = glu['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
+axes[2,1].errorbar(x = pot['index'], y = pot['Training set'], yerr = pot['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
 
-axes[1,2].legend(loc = 'upper right', frameon = False)
+axes[2,1].legend(loc = 'upper right', frameon = False)
 
+ax[0,0].text(0.05, 0.9, '(A)', weight = 'bold', transform = ax[0,0].transAxes)
 plt.grid(True, ls = '--', lw = 0.3)
 fig.supylabel('RMSE', fontsize = 18)
 fig.supxlabel('Model', fontsize = 18)
@@ -109,4 +114,5 @@ plt.subplots_adjust(top=0.9,
                     right=0.945,
                     hspace=0.2,
                     wspace=0.2)
+fig.tight_layout()
 plt.show()
