@@ -13,6 +13,7 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 
+
 font = {'family':'sans','weight':'normal',
         'size'   : 16}
 
@@ -77,34 +78,36 @@ for i,ax in enumerate(axes.flat):
     
 #test-set same session
 
-axes[0,0].errorbar(x = urea['index'], y = urea['Test set-same session'], yerr = urea['SD1'], ls = '',color = 'k', marker = 's', capsize = 2.0)
-axes[0,1].errorbar(x = crea['index'], y = crea['Test set-same session'], yerr = crea['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
-axes[1,0].errorbar(x = sodium['index'], y = sodium['Test set-same session'], yerr = sodium['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
-axes[1,1].errorbar(x = phos['index'], y = phos['Test set-same session'], yerr = phos['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
-axes[2,0].errorbar(x = glu['index'], y = glu['Test set-same session'], yerr = glu['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
-axes[2,1].errorbar(x = pot['index'], y = pot['Test set-same session'], yerr = pot['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
+X = np.array(range(len(urea['index'])))
+
+axes[0,0].errorbar(x = X - 0.1, y = urea['Test set-same session'], yerr = urea['SD1'], ls = '',color = 'k', marker = 's', capsize = 2.0)
+axes[0,1].errorbar(x = X - 0.1, y = crea['Test set-same session'], yerr = crea['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
+axes[1,0].errorbar(x = X - 0.1, y = sodium['Test set-same session'], yerr = sodium['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
+axes[1,1].errorbar(x = X - 0.1, y = phos['Test set-same session'], yerr = phos['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
+axes[2,0].errorbar(x = X - 0.1, y = glu['Test set-same session'], yerr = glu['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0)
+axes[2,1].errorbar(x = X - 0.1, y = pot['Test set-same session'], yerr = pot['SD1'], ls = '', color = 'k', marker = 's', capsize = 2.0, label = 'Test-1st')
 
 #test-set same session
 
-axes[0,0].errorbar(x = urea['index'], y = urea['Test set-other session'], yerr = urea['SD2'], ls = '',color = 'crimson',marker = 'o', capsize = 2.0)
-axes[0,1].errorbar(x = crea['index'], y = crea['Test set-other session'], yerr = crea['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
-axes[1,0].errorbar(x = sodium['index'], y = sodium['Test set-other session'], yerr = sodium['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
-axes[1,1].errorbar(x = phos['index'], y = phos['Test set-other session'], yerr = phos['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
-axes[2,0].errorbar(x = glu['index'], y = glu['Test set-other session'], yerr = glu['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
-axes[2,1].errorbar(x = pot['index'], y = pot['Test set-other session'], yerr = pot['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
+axes[0,0].errorbar(x = X, y = urea['Test set-other session'], yerr = urea['SD2'], ls = '',color = 'crimson',marker = 'o', capsize = 2.0)
+axes[0,1].errorbar(x = X, y = crea['Test set-other session'], yerr = crea['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
+axes[1,0].errorbar(x = X, y = sodium['Test set-other session'], yerr = sodium['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
+axes[1,1].errorbar(x = X, y = phos['Test set-other session'], yerr = phos['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
+axes[2,0].errorbar(x = X, y = glu['Test set-other session'], yerr = glu['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0)
+axes[2,1].errorbar(x = X, y = pot['Test set-other session'], yerr = pot['SD2'], ls = '', color = 'crimson',marker = 'o', capsize = 2.0, label = 'Test-2nd')
 
 #test-set same session
 
-axes[0,0].errorbar(x = urea['index'], y = urea['Training set'], yerr = urea['SD3'], ls = '',color = 'limegreen',marker = '*', capsize = 2.0)
-axes[0,1].errorbar(x = crea['index'], y = crea['Training set'], yerr = crea['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
-axes[1,0].errorbar(x = sodium['index'], y = sodium['Training set'], yerr = sodium['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
-axes[1,1].errorbar(x = phos['index'], y = phos['Training set'], yerr = phos['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
-axes[2,0].errorbar(x = glu['index'], y = glu['Training set'], yerr = glu['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
-axes[2,1].errorbar(x = pot['index'], y = pot['Training set'], yerr = pot['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
+axes[0,0].errorbar(x = X + 0.1, y = urea['Training set'], yerr = urea['SD3'], ls = '',color = 'limegreen',marker = '*', capsize = 2.0)
+axes[0,1].errorbar(x = X + 0.1, y = crea['Training set'], yerr = crea['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
+axes[1,0].errorbar(x = X + 0.1, y = sodium['Training set'], yerr = sodium['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
+axes[1,1].errorbar(x = X + 0.1, y = phos['Training set'], yerr = phos['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
+axes[2,0].errorbar(x = X + 0.1, y = glu['Training set'], yerr = glu['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
+axes[2,1].errorbar(x = X + 0.1, y = pot['Training set'], yerr = pot['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
 
 axes[2,1].legend(loc = 'upper right', frameon = False)
 
-ax[0,0].text(0.05, 0.9, '(A)', weight = 'bold', transform = ax[0,0].transAxes)
+
 plt.grid(True, ls = '--', lw = 0.3)
 fig.supylabel('RMSE', fontsize = 18)
 fig.supxlabel('Model', fontsize = 18)

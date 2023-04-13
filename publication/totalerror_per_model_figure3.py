@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib.patches as mpatches
 import matplotlib.lines as mlines
+import matplotlib.transforms as transforms
 
 font = {'family':'sans','weight':'normal',
         'size'   : 22}
@@ -80,7 +81,10 @@ axes[0,1].errorbar(df_same['model'], df_same['mean'], yerr = df_same['std'], ls 
 axes[0,2].errorbar(df_other['model'], df_other['mean'], yerr = df_other['std'], ls = '', marker = 's', capsize = 2.0, color = 'k')
 
 ax2 = axes[0,2].twinx()
-ax2.errorbar(df_training['model'], comp['mean'], comp['sd'], ls = '', marker = 's', capsize = 2.0, color = 'red')
+
+offset = lambda p: transforms.ScaledTranslation(p/72.,0, plt.gcf().dpi_scale_trans)
+trans = plt.gca().transData
+ax2.errorbar(df_training['model'], comp['mean'], comp['sd'], ls = '', marker = 's', capsize = 2.0, color = 'red', transform = trans + offset(5))
 ax2.set_ylabel('Computational time, s', color = 'red')
 ax2.ticklabel_format(axis = 'y', style = 'sci', scilimits = (0,0))
 #------------------------------------------#
@@ -138,7 +142,7 @@ axes[0,2].legend(handles=[black_square])
 
 
 for i, label in enumerate(('A', 'B', 'C', 'D', 'E', 'F')):
-    axes.flat[i].text(0.05, 0.9, label, transform=axes.flat[i].transAxes,
+    axes.flat[i].text(0.01, 0.9, label, transform=axes.flat[i].transAxes,
             fontsize=16, fontweight='bold', va='top')
 
 # ax[1,0].set_ylabel('----8/3 ratio----')
@@ -158,3 +162,4 @@ plt.subplots_adjust(top=0.9,
                     wspace=0.2)
 
 fig.tight_layout()
+plt.savefig('Figure_3.png', dpi = 600)
