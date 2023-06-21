@@ -162,4 +162,4 @@ plt.subplots_adjust(top=0.9,
                     wspace=0.2)
 
 fig.tight_layout()
-plt.savefig('Figure_3.png', dpi = 600)
+plt.savefig('Figure_2.eps', dpi = 600)

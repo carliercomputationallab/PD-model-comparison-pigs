@@ -105,8 +105,10 @@ axes[1,1].errorbar(x = X + 0.1, y = phos['Training set'], yerr = phos['SD3'], ls
 axes[2,0].errorbar(x = X + 0.1, y = glu['Training set'], yerr = glu['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0)
 axes[2,1].errorbar(x = X + 0.1, y = pot['Training set'], yerr = pot['SD3'], ls = '', color = 'limegreen',marker = '*', capsize = 2.0, label = 'Training')
 
-axes[2,1].legend(loc = 'upper right', frameon = False)
-
+axes[2,1].legend(loc = 'upper right', frameon = True)
+for ax in axes.flat:
+    ax.set_xticks(range(len(urea['index'])))
+    ax.set_xticklabels(urea['index'])
 
 plt.grid(True, ls = '--', lw = 0.3)
 fig.supylabel('RMSE', fontsize = 18)
@@ -118,4 +120,5 @@ plt.subplots_adjust(top=0.9,
                     hspace=0.2,
                     wspace=0.2)
 fig.tight_layout()
+plt.savefig('Figure_3.eps',  dpi = 300)
 plt.show()

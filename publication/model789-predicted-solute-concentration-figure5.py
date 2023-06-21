@@ -14,10 +14,6 @@ import csv
 # from csv import writer
 from itertools import count
 
-font = {'size'   : 16}
-
-plt.rc('font', **font)
-plt.rcParams["font.family"] = "Times New Roman"
 
 def objective(mtac, predicted_cd, Cp, L, V, df_cd, Vr, V_fill, x0, x1):
     '''The objective function needed to be minimised'''
@@ -42,7 +38,7 @@ def rk(t, mtac, predicted_cd, Cp, L, V, df_cd, Vr, V_fill, x0, x1):
         # print(PS_s)
         #The current albumin value is from Joost.
         #MTAC for large pores
-        PS_l = mtac[0:6] * 0.002 *abya0_l* (1 + x0* np.exp(-timestep/x1))# Ref: two pore model-TPM,rippe, table 1, A0L/A0 value
+        PS_l = mtac[0:6] * 0.002 *abya0_l* (1 + x0* np.exp(-timestep/x1))# Ref: two pore model-oberg,rippe, table 1, A0L/A0 value
         
         "Apply Runge Kutta Formulas to find next value of y"
         k1, v1 = comdxdt(cd, timestep, mtac,  predicted_cd, Cp, L, V, df_cd, Vr, V_fill, PS_s, PS_l)
@@ -194,10 +190,10 @@ for t in range(1,241):
     predicted_cd_W.loc[t] = df_cp.mean(axis=0)-(df_cp.mean(axis=0)-predicted_cd_W.loc[0])*((V[0]/V[t])**(1-0.5))*np.exp(-MTAC_W/V.mean()*t/1000)
 
 #########################################
-#                TPM                  #
+#                OBERG                  #
 #########################################    
-TPM = pd.read_excel('fitted_X.xlsx').set_index('patient')
-MTAC_O = TPM.loc[p].iloc[0:6]
+oberg = pd.read_excel('fitted_X.xlsx').set_index('patient')
+MTAC_O = oberg.loc[p].iloc[0:6]
 predicted_cd_O = pd.DataFrame(columns= ["Urea", "Creatinine", "Sodium", "Phosphate", "Glucose", "Potassium"])
 predicted_cd_O.loc[0]=df_cd.loc[0]
 LS = 0.074 #ml/min/mmHg
@@ -218,7 +214,7 @@ rl = 250
 solutes = ["Urea", "Creatinine", "Sodium", "Phosphate", "Glucose", "Potassium"]
 #radius of molecules
 r = np.array([ 2.6, 3.0, 2.3, 2.77, 3.7, 2.8]) #the phosphate radius is approximated from its topological surface area
-#for radius, new paper by TPM - https://journals.sagepub.com/doi/suppl/10.1177/08968608211069232
+#for radius, new paper by Oberg - https://journals.sagepub.com/doi/suppl/10.1177/08968608211069232
 #constants to calculate sigma
 gamma_s = r/rs
 gamma_l = r/rl
@@ -281,41 +277,42 @@ predicted_cd_O = objective(MTAC_O, predicted_cd_O, Cp, L, V, df_cd, Vr, V_fill, 
 #                   PLOT                #
 #########################################
     
-fig, ax = plt.subplots(3,2, figsize = (12,36))
+fig, ax = plt.subplots(3,2, figsize = (12,18))
 ax[0,0].scatter(df_cd.index,df_cd.iloc[:,0], label = 'Data', c = 'k') 
 ax[0,0].plot(range(241),predicted_cd_G['Urea'], label = 'Garred', lw = 3)  
 ax[0,0].plot(range(241),predicted_cd_W['Urea'], label = 'Waniewski', ls = '--', lw = 3) 
 ax[0,0].plot(range(241),predicted_cd_O['Urea'], label = 'TPM',ls = '-.', lw = 3) 
-ax[0,0].set_title('Urea')
 
+ax[0,0].set_title('Urea')
 ax[0,1].scatter(df_cd.index,df_cd.iloc[:,1], label = 'Data', c = 'k') 
 ax[0,1].plot(range(241),predicted_cd_G['Creatinine'], label = 'fitted', lw = 3) 
 ax[0,1].plot(range(241),predicted_cd_W['Creatinine'], label = 'fitted', ls = '--', lw = 3) 
 ax[0,1].plot(range(241),predicted_cd_O['Creatinine'], label = 'fitted',ls = '-.', lw = 3)
-ax[0,1].set_title('Creatinine')
 
+ax[0,1].set_title('Creatinine')
 ax[1,0].scatter(df_cd.index,df_cd.iloc[:,2], label = 'Data', c = 'k') 
 ax[1,0].plot(range(241),predicted_cd_G['Sodium'], label = 'fitted', lw = 3) 
 ax[1,0].plot(range(241),predicted_cd_W['Sodium'], label = 'fitted', ls = '--', lw = 3)
 ax[1,0].plot(range(241),predicted_cd_O['Sodium'], label = 'fitted',ls = '-.', lw = 3)  
-ax[1,0].set_title('Sodium')
 
+ax[1,0].set_title('Sodium')
 ax[1,1].scatter(df_cd.index,df_cd.iloc[:,3], label = 'Data', c = 'k') 
 ax[1,1].plot(range(241),predicted_cd_G['Phosphate'], label = 'fitted', lw = 3)  
 ax[1,1].plot(range(241),predicted_cd_W['Phosphate'], label = 'fitted', ls = '--', lw = 3)
 ax[1,1].plot(range(241),predicted_cd_O['Phosphate'], label = 'fitted',ls = '-.', lw = 3) 
-ax[1,1].set_title('Phosphate')
 
+ax[1,1].set_title('Phosphate')
 ax[2,0].scatter(df_cd.index,df_cd.iloc[:,4], label = 'Data', c = 'k') 
 ax[2,0].plot(range(241),predicted_cd_G['Glucose'], label = 'fitted', lw = 3)
 ax[2,0].plot(range(241),predicted_cd_W['Glucose'], label = 'fitted', ls = '--', lw = 3)
 ax[2,0].plot(range(241),predicted_cd_O['Glucose'], label = 'fitted',ls = '-.', lw = 3)
-ax[2,0].set_title('Glucose')
 
+ax[2,0].set_title('Glucose')
 ax[2,1].scatter(df_cd.index,df_cd.iloc[:,5], label = 'Data', c = 'k') 
 ax[2,1].plot(range(241),predicted_cd_G['Potassium'], label = 'Garred', lw = 3)
 ax[2,1].plot(range(241),predicted_cd_W['Potassium'], label = 'Waniewski', ls = '--', lw = 3)
 ax[2,1].plot(range(241),predicted_cd_O['Potassium'], label = 'TPM',ls = '-.', lw = 3)
+
 ax[2,1].set_title('Potassium')
 
 L = 0.7
@@ -339,17 +336,10 @@ ax[2,0].plot(range(241),predicted_cd_O3['Glucose'], label = 'fitted')
 ax[2,1].plot(range(241),predicted_cd_O3['Potassium'], label = 'TPM-MTAC')
 
 ax[1,0].set_ylim(ymax = 131)
-ax[0,0].text(0, 2.2, '(A)', weight = 'bold')
-ax[0,1].text(0, 0.12, '(B)', weight = 'bold')
-ax[1,0].text(0, 130, '(C)', weight = 'bold')
-ax[1,1].text(0, 0.6, '(D)', weight = 'bold')
-ax[2,0].text(0, 60, '(E)', weight = 'bold')
-ax[2,1].text(0, 3, '(F)', weight = 'bold')
 
 fig.supylabel('cd, mmol/L')
 fig.supxlabel('time, min')
 fig.tight_layout()
 plt.legend()
 
-
-
+plt.savefig('Figure_4.eps', dpi = 600)
